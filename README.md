@@ -13,7 +13,7 @@ VERSION or DATE: 12/14/15
 HOW TO START THIS PROJECT: Run the void in the FridgeFriend Class.
 AUTHORS: Molly Murray
 USER INSTRUCTIONS: Once you run Fridge Friend, it will prompt you to enter in your name. If you're
-an authorized user, it'll let you into the "Fridge". Once there, you can enter in a food
+an authorized user, it'll let you into the "Fridge". So in oder to run it, use Molly as the user. Once there, you can enter in a food
 item and its expiration date. From there, it will tell you if it's expired or how many
 days left it has until it expires. Once you exit the fridge, it will remember what is in it.
 If you go back into the fridge, it will immediately greet you and tell you the name of
