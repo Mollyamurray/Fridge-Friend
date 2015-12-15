@@ -1,0 +1,147 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
+
+public class FridgeFriend
+{
+    private User current;
+    private ArrayList<User> userList = new ArrayList<User>();
+   // private ArrayList<Food> allFood = new ArrayList<Food>();
+    Scanner scanner = new Scanner(System.in); 
+    
+    //POPULATING THE userList
+    String n1 = "Jimmy";
+    private User u1 = new User(n1);
+    
+    String n2 = "Molly";
+    private User u2 = new User(n2);
+    
+    String n3 = "Ethan";
+    private User u3 = new User(n3);
+    
+    public static void main(String [] args) {
+	   FridgeFriend ff = new FridgeFriend();
+	   ff.run();
+	    
+	
+	}
+
+	//\\//////////////////////////////////////////////////////////
+    //\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    
+    public void run()
+    {
+    	this.populate();
+    	System.out.println("Welcome to Fridge Friend");
+    	 boolean unknown = true;
+		while(unknown)
+    	 {
+    	
+    		System.out.println("Who are you again?");
+         
+    		String name = scanner.nextLine();
+    		if(this.getUser(name) == null)
+    		{
+    			System.out.println("I don't think we've met before.");
+    		}
+    		else
+    		{
+    	
+    			unknown = false;
+    			int respose;
+    			boolean running = true;
+    			String newName;
+    			Date newExp = null;
+    			String removeFood;
+    			current = this.getUser(name);
+    			System.out.println("Hi, " + name);
+    			while(running)
+        		 {
+        		 	System.out.println("Here is your fridge:");
+        		    current.getFoodFromFile(current);
+        		    current.printFridge();
+        		 
+        		    System.out.println("Operations: (1)Add new food item (2)Remove food from fridge (3)Exit");
+        		    int response = scanner.nextInt();
+        		    if(response == 1)
+        		    {
+        		    	scanner.nextLine();
+        		    	System.out.println("What is the name of the food?");
+        		    	newName = scanner.nextLine();
+        		    	System.out.println("What is the expiration date of the food? (MM dd yyyy)");
+        		    	String temp = scanner.nextLine();
+        		    	SimpleDateFormat dateFormat = new SimpleDateFormat("MM dd yyyy");
+        		    	try {
+							newExp = dateFormat.parse(temp);
+						} catch (ParseException e) {
+							e.printStackTrace();
+						}
+        		    	
+        		    	current.addFood(new Food(newName, newExp));
+        		    	current.writeFoodToFile(current);
+        		    }
+        		    else if(response == 2)
+        		    {
+        		    	scanner.nextLine();
+        		    	System.out.println("What food would you like to remove?");
+        		    	removeFood = scanner.nextLine();
+        		    	
+        		    	current.removeFood(removeFood);
+        		    	current.writeFoodToFile(current);
+        		    }
+        		    else if(response == 3)
+        		    {
+        		    	running=false;
+        		    	current.writeFoodToFile(current);
+        		    	System.out.println("Thanks for using FridgeFriend!");
+        		    }
+        		    else
+        		    {
+        		    	System.out.println("Sorry. Your request could not be understood. Please enter the number related to your desired operation!");
+        		    }
+        		 }
+        }
+    	 }
+    }
+    
+    public void populate()
+	{
+		this.addUser(u1);
+		this.addUser(u2);
+		this.addUser(u3);
+	}
+
+	
+    
+   
+    
+    public void addUser(User u)
+    {
+    userList.add(u);
+    }
+    
+    public User getUser(String name)
+    {
+    	User current = null;
+    	for(User u  : userList)
+    	{
+    		
+    		if(u.getName().equals(name))
+    		{
+    			
+    			current = u;
+    		}
+    	}
+    	return current;
+    }
+
+}
